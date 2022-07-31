@@ -16,7 +16,7 @@ const App = () => {
     <GithubProvider>
       <AlertProvider>
         <Router>
-          <div className="flex flex-col min-h-screen text-gray-200 bg-gradient-to-t from-stone-900 to-red-900 ...">
+          <div className="flex flex-col min-h-screen text-gray-300 bg-gradient-to-t from-stone-900 to-red-900 ...">
             <Navbar />
             <main className="container mx-auto px-3 pb-12">
               <Alert />
