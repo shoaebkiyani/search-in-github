@@ -1,8 +1,8 @@
 const Footer = () => {
   const footerYear = new Date().getFullYear();
   return (
-    <footer className="footer p-10 text-primary-content footer-center">
-      <p>Copyright &copy: {footerYear} All rights reserved </p>
+    <footer className="footer p-10 sticky top-[100vh] text-primary-content footer-center">
+      <p>Copyright &copy; {footerYear} All rights reserved </p>
     </footer>
   );
 };

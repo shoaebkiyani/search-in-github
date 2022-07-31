@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Navbar = ({ title }) => {
   return (
-    <nav className="navbar">
+    <nav className="navbar bg-gradient-to-b from-stone-900 to-red-900 ...">
       <div className="container mx-auto">
         <div className="flex-none px-2 mx-2 my-2">
           <FaGithub className="inline pr-2 text-4xl" />
@@ -18,14 +18,11 @@ const Navbar = ({ title }) => {
             <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
               Home
             </Link>
+            <Link to="/projects" className="btn btn-ghost btn-sm rounded-btn">
+              Projects
+            </Link>
             <Link to="/about" className="btn btn-ghost btn-sm rounded-btn">
               About
-            </Link>
-            <Link to="/work" className="btn btn-ghost btn-sm rounded-btn">
-              Work
-            </Link>
-            <Link to="/contact" className="btn btn-ghost btn-sm rounded-btn">
-              Contact
             </Link>
           </div>
         </div>
