@@ -44,7 +44,7 @@ const User = () => {
     <>
       <div className="w-full mx-auto mt-4 lg:w-10/12">
         <div className="mb-4">
-          <Link to="/" className="btn btn-outline mb-20">
+          <Link to="/" className="text-gray-300 btn btn-outline mb-20">
             Back To Search
           </Link>
           <div className="grid grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8">
@@ -71,7 +71,7 @@ const User = () => {
                     href={html_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="btn btn-outline"
+                    className="text-gray-300 btn btn-outline"
                   >
                     Visit Github Profile
                   </a>

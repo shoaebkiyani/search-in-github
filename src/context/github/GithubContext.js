@@ -49,12 +49,23 @@ export const GithubProvider = ({ children }) => {
       },
     });
 
-    const { items } = await res.json();
+    if (res.status === 401) {
+      const res = await fetch(`${GITHUB_URL}/search/users?${params}`);
 
-    dispatch({
-      type: "GET_USERS",
-      payload: items,
-    });
+      const { items } = await res.json();
+
+      dispatch({
+        type: "GET_USERS",
+        payload: items,
+      });
+    } else {
+      const { items } = await res.json();
+
+      dispatch({
+        type: "GET_USERS",
+        payload: items,
+      });
+    }
   };
 
   // Get Single User
@@ -66,6 +77,17 @@ export const GithubProvider = ({ children }) => {
         Authorization: `token ${GITHUB_TOKEN}`,
       },
     });
+
+    if (res.status === 401) {
+      const res = await fetch(`${GITHUB_URL}/users/${login}`);
+
+      const data = await res.json();
+
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+      });
+    }
 
     if (res.status === 404) {
       window.location = "/notfound";
@@ -93,12 +115,23 @@ export const GithubProvider = ({ children }) => {
       },
     });
 
-    const data = await res.json();
+    if (res.status === 401) {
+      const res = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`);
 
-    dispatch({
-      type: "GET_REPOS",
-      payload: data,
-    });
+      const data = await res.json();
+
+      dispatch({
+        type: "GET_REPOS",
+        payload: data,
+      });
+    } else {
+      const data = await res.json();
+
+      dispatch({
+        type: "GET_REPOS",
+        payload: data,
+      });
+    }
   };
 
   // Clear Uses
