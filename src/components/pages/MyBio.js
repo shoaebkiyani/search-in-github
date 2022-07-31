@@ -9,7 +9,7 @@ const Contact = () => {
         <h1 className="text-5xl xl:text-6xl lg:text-6xl mb-1">
           Shoaib <span className="text-yellow-600">Kiyani</span>
         </h1>
-        <h4 className="text-lg xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
+        <h4 className="text-lg font-semibold text-yellow-600 xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
           Latest Certifications:
         </h4>
         <div className="flex flex-wrap items-center">
@@ -57,7 +57,7 @@ const Contact = () => {
           </div>
         </div>
         <div>
-          <h4 className="text-lg xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
+          <h4 className="text-yellow-600 font-semibold text-lg xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
             Social Media:
           </h4>
         </div>
@@ -81,7 +81,7 @@ const Contact = () => {
         </div>
 
         <div>
-          <h4 className="text-lg xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
+          <h4 className="text-yellow-600 font-semibold text-lg xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
             Contact Info:
           </h4>
         </div>
