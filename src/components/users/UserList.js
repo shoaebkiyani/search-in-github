@@ -9,6 +9,7 @@ const UserList = () => {
   if (!loading) {
     return (
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 my-2">
+        {/* {users.length > 0 ? <Pagination /> : null} */}
         {users.map((user) => (
           <UserItem key={user.id} user={user} />
         ))}

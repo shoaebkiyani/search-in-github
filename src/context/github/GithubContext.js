@@ -1,15 +1,17 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import githubReducer from "./GithubReducer";
 
 const GithubContext = createContext();
 
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+// const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
     user: {},
+    rate_limit: [10],
+    limit_remaining: [10],
     mock_user: {},
     repos: [],
     loading: false,
@@ -17,21 +19,25 @@ export const GithubProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  const mockUser = async () => {
-    setLoading();
+  useEffect(() => {
+    setInterval(() => {
+      rateLimit();
+    }, 60000);
+  }, []);
 
-    const res = await fetch(`${GITHUB_URL}/users/shoaebkiyani`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
-    });
-
+  // Get Rate Limit
+  const rateLimit = async () => {
+    const res = await fetch(`${GITHUB_URL}/rate_limit`);
     const data = await res.json();
 
-    console.log(data);
     dispatch({
-      type: "GET_MOCK_USER",
-      payload: data,
+      type: "GET_RATE_LIMIT",
+      payload: data.resources.search.limit,
+    });
+
+    dispatch({
+      type: "GET_LIMIT_REMAINING",
+      payload: data.resources.search.remaining,
     });
   };
 
@@ -43,64 +49,38 @@ export const GithubProvider = ({ children }) => {
       q: text,
     });
 
-    const res = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
+    const res = await fetch(`${GITHUB_URL}/search/users?${params}`);
+    //   , {
+    //   headers: {
+    //     Authorization: `token ${GITHUB_TOKEN}`,
+    //   },
+    // });
+
+    const { items } = await res.json();
+
+    dispatch({
+      type: "GET_USERS",
+      payload: items,
     });
 
-    if (res.status === 401) {
-      const res = await fetch(`${GITHUB_URL}/search/users?${params}`);
-
-      const { items } = await res.json();
-
-      dispatch({
-        type: "GET_USERS",
-        payload: items,
-      });
-    } else {
-      const { items } = await res.json();
-
-      dispatch({
-        type: "GET_USERS",
-        payload: items,
-      });
-    }
+    rateLimit();
   };
 
   // Get Single User
   const getUser = async (login) => {
     setLoading();
 
-    const res = await fetch(`${GITHUB_URL}/users/${login}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
+    const res = await fetch(`${GITHUB_URL}/users/${login}`);
+
+    const data = await res.json();
+
+    dispatch({
+      type: "GET_USER",
+      payload: data,
     });
-
-    if (res.status === 401) {
-      const res = await fetch(`${GITHUB_URL}/users/${login}`);
-
-      const data = await res.json();
-
-      dispatch({
-        type: "GET_USER",
-        payload: data,
-      });
-    }
-
-    if (res.status === 404) {
-      window.location = "/notfound";
-    } else {
-      const data = await res.json();
-
-      dispatch({
-        type: "GET_USER",
-        payload: data,
-      });
-    }
   };
 
+  // Get User Repos
   const getUserRepos = async (login) => {
     setLoading();
 
@@ -109,32 +89,22 @@ export const GithubProvider = ({ children }) => {
       per_page: 5,
     });
 
-    const res = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
+    const res = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`);
+    // , {
+    //   headers: {
+    //     Authorization: `token ${GITHUB_TOKEN}`,
+    //   },
+    // });
+
+    const data = await res.json();
+
+    dispatch({
+      type: "GET_REPOS",
+      payload: data,
     });
-
-    if (res.status === 401) {
-      const res = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`);
-
-      const data = await res.json();
-
-      dispatch({
-        type: "GET_REPOS",
-        payload: data,
-      });
-    } else {
-      const data = await res.json();
-
-      dispatch({
-        type: "GET_REPOS",
-        payload: data,
-      });
-    }
   };
 
-  // Clear Uses
+  // Clear Users
   const clearUsers = () =>
     dispatch({
       type: "CLEAR_USERS",
@@ -146,7 +116,8 @@ export const GithubProvider = ({ children }) => {
   return (
     <GithubContext.Provider
       value={{
-        mock_user: state.mock_user,
+        rate_limit: state.rate_limit,
+        limit_remaining: state.limit_remaining,
         users: state.users,
         user: state.user,
         loading: state.loading,
@@ -155,7 +126,7 @@ export const GithubProvider = ({ children }) => {
         getUser,
         getUserRepos,
         clearUsers,
-        mockUser,
+        rateLimit,
       }}
     >
       {children}

@@ -4,12 +4,17 @@ import GithubContext from "../../context/github/GithubContext";
 import AlertContext from "../../context/alert/AlertContext";
 
 const UserSearch = () => {
-  const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { users, searchUsers, clearUsers, rate_limit, limit_remaining } =
+    useContext(GithubContext);
   const { setAlert } = useContext(AlertContext);
 
   const [text, setText] = useState("");
 
-  const handleChange = (e) => setText(e.target.value);
+  const handleChange = (e) => {
+    limit_remaining > 0
+      ? setText(e.target.value)
+      : setAlert("You have exceeded the limit, please wait for a while");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,16 +40,20 @@ const UserSearch = () => {
                 value={text}
                 onChange={handleChange}
               />
-              <button className="btn btn-md absolute top-0 right-0 rounded-l-none w-32">
-                Go
-              </button>
+              {limit_remaining > 0 ? (
+                <button className="btn btn-md absolute top-0 right-0 rounded-l-none w-32">
+                  Go
+                </button>
+              ) : (
+                <button className="btn btn-md btn-disabled text-black absolute top-0 right-0 rounded-l-none w-32">
+                  Go
+                </button>
+              )}
             </div>
           </div>
         </form>
       </div>
-      {users.length <= 0 ? (
-        <MyBio />
-      ) : (
+      {users.length > 0 ? (
         <div>
           <button
             onClick={clearUsers}
@@ -53,7 +62,13 @@ const UserSearch = () => {
             Clear List
           </button>
         </div>
+      ) : (
+        <MyBio />
       )}
+      <div className="absolute mt-2 right-4 xl:right-8 lg:right-8 md:right-6 bg-red-600 text-white px-2 rounded-lg">
+        <p className="inline">Rate Limit (per min): </p>
+        {limit_remaining} / {rate_limit}
+      </div>
     </div>
   );
 };

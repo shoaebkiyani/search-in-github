@@ -1,9 +1,15 @@
 const githubReducer = (state, action) => {
   switch (action.type) {
-    case "GET_MOCK_USER":
+    case "GET_RATE_LIMIT":
       return {
         ...state,
-        mock_user: action.payload,
+        rate_limit: action.payload,
+        loading: false,
+      };
+    case "GET_LIMIT_REMAINING":
+      return {
+        ...state,
+        limit_remaining: action.payload,
         loading: false,
       };
     case "GET_USERS":
