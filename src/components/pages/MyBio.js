@@ -1,6 +1,7 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import FiTech from "../layout/assets/images/fitech_logo.png";
 import OpiFrame from "../layout/assets/images/opiframe.png";
+import Integrify from "../layout/assets/images/Integrify_logo_old.jpg"
 
 const Contact = () => {
   return (
@@ -10,9 +11,41 @@ const Contact = () => {
           Shoaib <span className="text-yellow-600">Kiyani</span>
         </h1>
         <h4 className="text-lg font-semibold text-yellow-600 xl:text-xl lg:text-xl pl-2 mt-4 mb-2 rounded-lg shadow-xl underline">
-          Latest Certifications:
+        Certifications:
         </h4>
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-col flex-wrap">
+          <div className="hover:text-yellow-600">
+            <a
+              href="https://www.dropbox.com/scl/fi/qn3d0sxqxum2z7fgpxvgz/Shoaib-Kiyani-Integrify.pdf?rlkey=t46zql55wuabzw8gv8l0eq8lw&dl=0"
+              target="_blank"
+              rel="noreferrer"
+              className="flex"
+            >
+              <img
+                src={Integrify}
+                alt="logo"
+                className="w-8 h-8 rounded-lg shadow-xl ml-2 mb-2"
+              />
+              <h4 className="text-lg ml-2 mt-2">Full stack (TypeScript / Java / PostgreSQL)</h4>
+            </a>
+          </div>
+
+          <div className="hover:text-yellow-600">
+            <a
+              href="https://openbadgefactory.com/v1/assertion/1cea68af2fafd68fb996cc00499232dce126ba78"
+              target="_blank"
+              rel="noreferrer"
+              className="flex"
+            >
+              <img
+                src={FiTech}
+                alt="logo"
+                className="w-8 h-8 rounded-lg shadow-xl ml-2 mb-2"
+              />
+              <h4 className="text-xl ml-2 pt-2">Front-end Development</h4>
+            </a>
+          </div>
+
           <div className="hover:text-yellow-600">
             <a
               href="https://openbadgefactory.com/v1/assertion/866f35fed9494d04a1b0eed33e6478cc22fd3bed"
@@ -30,27 +63,11 @@ const Contact = () => {
             </a>
           </div>
 
-          <div className="hover:text-yellow-600">
-            <a
-              href="https://openbadgefactory.com/v1/assertion/1cea68af2fafd68fb996cc00499232dce126ba78"
-              target="_blank"
-              rel="noreferrer"
-              className="flex"
-            >
-              <img
-                src={FiTech}
-                alt="logo"
-                className="w-8 h-8 rounded-lg shadow-xl ml-2 xl:ml-4 lg:ml-4 md:ml-4 mb-2"
-              />
-              <h4 className="text-xl ml-2 pt-2">Front-end Development</h4>
-            </a>
-          </div>
-
           <div className="flex">
             <img
               src={OpiFrame}
               alt="logo"
-              className="w-8 h-8 rounded-lg shadow-xl ml-2 xl:ml-4 lg:ml-4 md:ml-2 mb-2"
+              className="w-8 h-8 rounded-lg shadow-xl ml-2 mb-2"
             />
 
             <h4 className="text-lg mx-2 mt-2">Full-stack(MERN) Development</h4>
@@ -94,16 +111,6 @@ const Contact = () => {
               className="ml-2"
             >
               shoaebkiyani@yahoo.com
-            </a>
-          </div>
-          <div className="hover:text-[#ca8a04]">
-            <FaPhone className="ml-16 inline" />
-            <a
-              href="tel: +358466326182"
-              title="Give me a call"
-              className="ml-2"
-            >
-              +358 46 632 6182
             </a>
           </div>
         </div>
